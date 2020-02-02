@@ -13,5 +13,5 @@ sudo apt-get install clang
 cd gn
 python build/gen.py
 sudo ninja -C out
-cp out/gn /usr/local/bin/
-cd ~/v8
+sudo cp out/gn /usr/local/bin/
+cd ~

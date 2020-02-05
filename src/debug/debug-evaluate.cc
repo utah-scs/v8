@@ -481,6 +481,9 @@ bool BytecodeHasNoSideEffect(interpreter::Bytecode bytecode) {
 DebugInfo::SideEffectState BuiltinGetSideEffectState(Builtins::Name id) {
   switch (id) {
     // Whitelist for builtins.
+    // Shredder builtins.
+    case Builtins::kHTGet:
+    case Builtins::kHTGetField:
     // Object builtins.
     case Builtins::kObjectConstructor:
     case Builtins::kObjectCreate:

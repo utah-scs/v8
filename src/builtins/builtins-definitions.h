@@ -1091,7 +1091,9 @@ namespace internal {
   TFJ(AsyncFromSyncIteratorPrototypeReturn, 1, kReceiver, kValue)              \
   /* #sec-async-iterator-value-unwrap-functions */                             \
   TFJ(AsyncIteratorValueUnwrap, 1, kReceiver, kValue)                          \
-                                                                               \
+  /* CSA builtins for Shedder */                                               \
+  TFJ(HTGet, 3, kReceiver, kP, kKey, kBuffer)                                             \
+  TFJ(HTGetField, 2, kReceiver, kX, kY)                                                   \
   /* CEntry */                                                                 \
   ASM(CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit, Dummy)          \
   ASM(CEntry_Return1_DontSaveFPRegs_ArgvOnStack_BuiltinExit, Dummy)            \

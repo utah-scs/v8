@@ -8633,6 +8633,20 @@ Node* CodeStubAssembler::ComputeSeededHash(Node* key) {
   return result;
 }
 
+// Needed by Shredder
+Node* CodeStubAssembler::ComputeIntegerHash(Node* key, Node* seed) {
+  Node* hash = TruncateWordToInt32(key);
+  hash = Word32Xor(hash, seed);
+  hash = Int32Add(Word32Xor(hash, Int32Constant(0xFFFFFFFF)),
+                  Word32Shl(hash, Int32Constant(15)));
+  hash = Word32Xor(hash, Word32Shr(hash, Int32Constant(12)));
+  hash = Int32Add(hash, Word32Shl(hash, Int32Constant(2)));
+  hash = Word32Xor(hash, Word32Shr(hash, Int32Constant(4)));
+  hash = Int32Mul(hash, Int32Constant(2057));
+  hash = Word32Xor(hash, Word32Shr(hash, Int32Constant(16)));
+  return Word32And(hash, Int32Constant(0x3FFFFFFF));
+}
+
 void CodeStubAssembler::NumberDictionaryLookup(
     TNode<NumberDictionary> dictionary, TNode<IntPtrT> intptr_index,
     Label* if_found, TVariable<IntPtrT>* var_entry, Label* if_not_found) {

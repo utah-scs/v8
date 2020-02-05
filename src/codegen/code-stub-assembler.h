@@ -2939,6 +2939,8 @@ class V8_EXPORT_PRIVATE CodeStubAssembler
 
   Node* ComputeUnseededHash(Node* key);
   Node* ComputeSeededHash(Node* key);
+  // Needed by Shredder
+  Node* ComputeIntegerHash(Node* key, Node* seed); 
 
   void NumberDictionaryLookup(TNode<NumberDictionary> dictionary,
                               TNode<IntPtrT> intptr_index, Label* if_found,

@@ -1831,6 +1831,11 @@ void Genesis::InitializeGlobal(Handle<JSGlobalObject> global_object,
                           1, true);
     SimpleInstallFunction(isolate_, number_fun, "isSafeInteger",
                           Builtins::kNumberIsSafeInteger, 1, true);
+    SimpleInstallFunction(isolate_, global_object, "HTGet", Builtins::kHTGet, 3,
+                          true);
+    SimpleInstallFunction(isolate_, global_object, "HTGetField", Builtins::kHTGetField, 2,
+                          true);
+
 
     // Install Number.parseFloat and Global.parseFloat.
     Handle<JSFunction> parse_float_fun =

@@ -29,6 +29,22 @@ namespace internal {
 //                                  ObjectVisitor* v);
 class BodyDescriptorBase {
  public:
+  // Fix segfault for Shredder
+  void* operator new[](size_t sz)
+  {
+    void* m = malloc(sz);
+    return m;
+  }
+  
+  void* operator new(size_t size)
+  {
+      void *storage = malloc(size);
+      if(NULL == storage) {
+              printf("allocation fail : no free memory");
+      }
+      return storage;
+  }
+
   template <typename ObjectVisitor>
   static inline void IteratePointers(HeapObject obj, int start_offset,
                                      int end_offset, ObjectVisitor* v);

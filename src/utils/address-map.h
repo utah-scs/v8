@@ -20,6 +20,16 @@ class PointerToIndexHashMap
                                        base::KeyEqualityMatcher<intptr_t>,
                                        base::DefaultAllocationPolicy> {
  public:
+  // Fix segfault for Shredder
+  void* operator new(size_t size)
+  {
+      void *storage = malloc(size);
+      if(NULL == storage) {
+              printf("allocation fail : no free memory");
+      }
+      return storage;
+  }
+
   using Entry = base::TemplateHashMapEntry<uintptr_t, uint32_t>;
 
   inline void Set(Type value, uint32_t index) {

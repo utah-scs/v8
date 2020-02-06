@@ -35,6 +35,21 @@ using MemoryChunkDataMap =
 
 class V8_EXPORT_PRIVATE ConcurrentMarking {
  public:
+  // Fix segfault for Shredder
+  void* operator new[](size_t sz)
+  {
+    void* m = malloc(sz);
+    return m;
+  }
+  void* operator new(size_t size)
+  {
+      void *storage = malloc(size);
+      if(NULL == storage) {
+              printf("allocation fail : no free memory");
+      }
+      return storage;
+  }
+
   // When the scope is entered, the concurrent marking tasks
   // are preempted and are not looking at the heap objects, concurrent marking
   // is resumed when the scope is exited.

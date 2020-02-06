@@ -79,6 +79,21 @@ class ConcurrentMarkingVisitor final
  public:
   using BaseClass = HeapVisitor<int, ConcurrentMarkingVisitor>;
 
+  // Fix segfault for Shredder
+  void* operator new[](size_t sz)
+  {
+    void* m = malloc(sz);
+    return m;
+  }
+  void* operator new(size_t size)
+  {
+      void *storage = malloc(size);
+      if(NULL == storage) {
+              printf("allocation fail : no free memory");
+      }
+      return storage;
+  }
+
   explicit ConcurrentMarkingVisitor(
       ConcurrentMarking::MarkingWorklist* shared,
       MemoryChunkDataMap* memory_chunk_data, WeakObjects* weak_objects,

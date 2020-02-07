@@ -54,8 +54,10 @@ TF_BUILTIN(HTGet, CodeStubAssembler) {
 
   Node* data = Load(MachineType::Int64(), IntPtrAdd(var_p.value(), IntPtrConstant(12)));
   StoreObjectField(buffer, JSArrayBuffer::kBackingStoreOffset, data);
+  Node* length = Load(MachineType::Uint32(), IntPtrAdd(var_p.value(), IntPtrConstant(20)));
+  StoreObjectField(buffer, JSArrayBuffer::kByteLengthOffset, length);
 
-  Return(ChangeUint32ToTagged(Load(MachineType::Uint32(), IntPtrAdd(var_p.value(), IntPtrConstant(28)))));
+  Return(ChangeUint32ToTagged(length));
 }
 
 // ES #sec-isfinite-number
